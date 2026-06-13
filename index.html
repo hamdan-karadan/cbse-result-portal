@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CBSE Result Portal</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#f3f5f7;
+    transition:0.3s;
+}
+
+.header{
+    background:#003366;
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+.header h1{
+    font-size:32px;
+}
+
+.header p{
+    font-size:14px;
+    margin-top:5px;
+}
+
+.container{
+    width:450px;
+    background:white;
+    margin:80px auto;
+    padding:40px;
+    border-radius:10px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.1);
+}
+
+.container h2{
+    text-align:center;
+    color:#003366;
+    margin-bottom:30px;
+}
+
+label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:bold;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:5px;
+    margin-bottom:20px;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    background:#003366;
+    color:white;
+    border:none;
+    border-radius:5px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#004a94;
+}
+
+.footer{
+    text-align:center;
+    margin-top:20px;
+    font-size:12px;
+    color:gray;
+}
+
+/* Dark Mode Button */
+
+.dark-toggle{
+    position:fixed;
+    top:15px;
+    right:15px;
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    border:none;
+    background:white;
+    color:#003366;
+    font-size:22px;
+    cursor:pointer;
+    box-shadow:0 2px 10px rgba(0,0,0,0.2);
+    z-index:1000;
+}
+
+/* Dark Theme */
+
+.dark-mode{
+    background:#121212;
+}
+
+.dark-mode .container{
+    background:#1f1f1f;
+    color:white;
+}
+
+.dark-mode input{
+    background:#2b2b2b;
+    color:white;
+    border:1px solid #555;
+}
+
+.dark-mode .footer{
+    color:#ccc;
+}
+
+/* Mobile Responsive */
+
+@media (max-width:600px){
+
+    .container{
+        width:90%;
+        margin:40px auto;
+        padding:25px;
+    }
+
+    .header h1{
+        font-size:26px;
+    }
+
+}
+
+</style>
+
+</head>
+<body>
+
+<button class="dark-toggle" onclick="toggleDarkMode()">
+🌙
+</button>
+
+<div class="header">
+    <h1>CBSE</h1>
+    <p>Central Board of Secondary Education</p>
+</div>
+
+<div class="container">
+
+    <h2>Result Portal</h2>
+
+    <label>Roll Number</label>
+    <input
+        type="text"
+        id="rollNo"
+        placeholder="Enter 8-digit Roll Number"
+        maxlength="8">
+
+    <label>Date of Birth</label>
+    <input
+        type="date"
+        id="dob">
+
+    <button onclick="validateForm()">
+        VIEW RESULT
+    </button>
+
+    <div class="footer">
+        Senior School Certificate Examination
+    </div>
+
+</div>
+
+<script>
+
+function validateForm(){
+
+    let rollNo = document.getElementById("rollNo").value;
+    let dob = document.getElementById("dob").value;
+
+    let rollPattern = /^[0-9]{8}$/;
+
+    if(!rollPattern.test(rollNo)){
+        alert("Roll Number must contain exactly 8 digits.");
+        return;
+    }
+
+    if(dob === ""){
+        alert("Please select your Date of Birth.");
+        return;
+    }
+
+    let birthYear = new Date(dob).getFullYear();
+    let currentYear = new Date().getFullYear();
+
+    let age = currentYear - birthYear;
+
+    if(age < 15 || age > 20){
+        alert("Age must be between 15 and 20 years.");
+        return;
+    }
+
+    window.location.href = "calculator.html";
+}
+
+function toggleDarkMode(){
+
+    document.body.classList.toggle("dark-mode");
+
+    let btn = document.querySelector(".dark-toggle");
+
+    if(document.body.classList.contains("dark-mode")){
+        btn.innerHTML = "☀️";
+    }
+    else{
+        btn.innerHTML = "🌙";
+    }
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CBSE Percentage Calculator</title>
+
+<style>
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Arial, sans-serif;
+}
+
+body{
+    background:#f3f5f7;
+}
+
+.header{
+    background:#003366;
+    color:white;
+    text-align:center;
+    padding:20px;
+}
+
+.header h1{
+    font-size:32px;
+}
+
+.header p{
+    margin-top:5px;
+    font-size:14px;
+}
+
+.container{
+    width:500px;
+    background:white;
+    margin:80px auto;
+    padding:40px;
+    border-radius:10px;
+    box-shadow:0 4px 15px rgba(0,0,0,0.1);
+}
+
+.container h2{
+    text-align:center;
+    color:#003366;
+    margin-bottom:10px;
+}
+
+.note{
+    text-align:center;
+    color:#666;
+    font-size:13px;
+    margin-bottom:25px;
+    line-height:1.5;
+}
+
+label{
+    display:block;
+    margin-bottom:8px;
+    font-weight:bold;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    border:1px solid #ccc;
+    border-radius:5px;
+    margin-bottom:20px;
+    font-size:15px;
+}
+
+input:focus{
+    outline:none;
+    border-color:#003366;
+}
+
+.stream-box{
+    margin-bottom:20px;
+}
+
+.stream-box input{
+    width:auto;
+    margin-right:5px;
+}
+
+.stream-box label{
+    display:inline;
+    margin-right:20px;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    background:#003366;
+    color:white;
+    border:none;
+    border-radius:5px;
+    font-size:16px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#004a94;
+}
+
+.result-box{
+    margin-top:30px;
+    border-top:1px solid #ddd;
+    padding-top:20px;
+    display:none;
+}
+
+.result-box h3{
+    color:#003366;
+    margin-bottom:15px;
+}
+
+.result-box p{
+    margin:12px 0;
+    font-size:16px;
+}
+
+/* Subject wise grade table */
+.grade-table{
+    width:100%;
+    border-collapse:collapse;
+    margin:15px 0 20px;
+    font-size:15px;
+}
+
+.grade-table th{
+    background:#003366;
+    color:white;
+    padding:10px 12px;
+    text-align:left;
+}
+
+.grade-table td{
+    padding:9px 12px;
+    border-bottom:1px solid #e0e0e0;
+}
+
+.grade-table tr:nth-child(even) td{
+    background:#f7f9fc;
+}
+
+.grade-table .sub-grade{
+    font-weight:bold;
+    color:#003366;
+}
+
+.grade-table .sub-fail{
+    color:red;
+    font-weight:bold;
+}
+
+/* Summary row */
+.summary-divider{
+    border-top:2px solid #003366;
+    padding-top:15px;
+    margin-top:5px;
+}
+
+.summary-divider p{
+    margin:10px 0;
+    font-size:16px;
+}
+
+/* Print button */
+.print-btn{
+    margin-top:15px;
+    background:#28a745;
+    display:none;
+}
+
+.print-btn:hover{
+    background:#218838;
+}
+
+.footer{
+    text-align:center;
+    margin-top:20px;
+    color:gray;
+    font-size:12px;
+}
+
+.pass{
+    color:green;
+    font-weight:bold;
+}
+
+.fail{
+    color:red;
+    font-weight:bold;
+}
+
+/* Dark Mode Toggle */
+.dark-toggle{
+    position:fixed;
+    top:15px;
+    right:15px;
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    border:none;
+    background:white;
+    color:#003366;
+    font-size:22px;
+    cursor:pointer;
+    box-shadow:0 2px 10px rgba(0,0,0,0.2);
+    z-index:1000;
+}
+
+/* Dark Theme */
+.dark-mode{
+    background:#121212;
+}
+
+.dark-mode .container{
+    background:#1f1f1f;
+    color:white;
+}
+
+.dark-mode .note{
+    color:#ccc;
+}
+
+.dark-mode input{
+    background:#2b2b2b;
+    color:white;
+    border:1px solid #555;
+}
+
+.dark-mode .result-box{
+    border-top:1px solid #555;
+}
+
+.dark-mode .footer{
+    color:#bbb;
+}
+
+.dark-mode .grade-table th{
+    background:#004a94;
+}
+
+.dark-mode .grade-table td{
+    border-bottom:1px solid #444;
+}
+
+.dark-mode .grade-table tr:nth-child(even) td{
+    background:#2a2a2a;
+}
+
+.dark-mode .sub-grade{
+    color:#7eb3ff !important;
+}
+
+.dark-mode .summary-divider{
+    border-top:2px solid #7eb3ff;
+}
+
+/* Print styles */
+@media print{
+    .dark-toggle,
+    .print-btn,
+    .stream-box,
+    label,
+    input,
+    button:not(.print-btn),
+    .note,
+    #bioSection,
+    #mathSection{
+        display:none !important;
+    }
+
+    .header{
+        -webkit-print-color-adjust:exact;
+        print-color-adjust:exact;
+    }
+
+    .container{
+        box-shadow:none;
+        margin:0 auto;
+        padding:20px;
+    }
+
+    .result-box{
+        display:block !important;
+    }
+
+    .grade-table th{
+        -webkit-print-color-adjust:exact;
+        print-color-adjust:exact;
+    }
+}
+
+/* Mobile */
+@media (max-width:600px){
+    .container{
+        width:90%;
+        margin:40px auto;
+        padding:25px;
+    }
+
+    .header h1{
+        font-size:26px;
+    }
+}
+
+</style>
+</head>
+
+<body>
+<button class="dark-toggle" onclick="toggleDarkMode()">🌙</button>
+
+<div class="header">
+    <h1>CBSE</h1>
+    <p>Central Board of Secondary Education</p>
+</div>
+
+<div class="container">
+
+    <h2>Percentage & Grade Calculator</h2>
+
+    <p class="note">Select your stream and enter marks.</p>
+
+    <label>Select Stream *</label>
+
+    <div class="stream-box">
+        <input type="radio" name="stream" value="PCB" onclick="showFields()">
+        <label>PCB</label>
+
+        <input type="radio" name="stream" value="PCM" onclick="showFields()">
+        <label>PCM</label>
+
+        <input type="radio" name="stream" value="PCMB" onclick="showFields()">
+        <label>PCMB</label>
+    </div>
+
+    <label>Physics Marks *</label>
+    <input type="number" id="physics" placeholder="0 - 100">
+
+    <label>Chemistry Marks *</label>
+    <input type="number" id="chemistry" placeholder="0 - 100">
+
+    <div id="bioSection" style="display:none;">
+        <label>Biology Marks</label>
+        <input type="number" id="biology" placeholder="0 - 100">
+    </div>
+
+    <div id="mathSection" style="display:none;">
+        <label>Mathematics Marks</label>
+        <input type="number" id="maths" placeholder="0 - 100">
+    </div>
+
+    <button onclick="calculateResult()">CALCULATE RESULT</button>
+
+    <!-- Result Box -->
+    <div class="result-box" id="resultBox">
+
+        <h3>📋 Result Summary</h3>
+
+        <!-- Subject wise grade table -->
+        <table class="grade-table" id="gradeTable">
+            <thead>
+                <tr>
+                    <th>Subject</th>
+                    <th>Marks</th>
+                    <th>Grade</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="gradeTableBody">
+            </tbody>
+        </table>
+
+        <!-- Overall summary -->
+        <div class="summary-divider">
+            <p><strong>Total Marks:</strong> <span id="total">---</span></p>
+            <p><strong>Percentage:</strong> <span id="percentage">---</span></p>
+            <p><strong>Overall Grade:</strong> <span id="grade">---</span></p>
+            <p><strong>Result:</strong> <span id="result">---</span></p>
+        </div>
+
+    </div>
+
+    <!-- Print/Download Button -->
+    <button class="print-btn" id="printBtn" onclick="window.print()">
+        🖨️ Print / Download Result
+    </button>
+
+    <div class="footer">Senior School Certificate Examination</div>
+
+</div>
+
+<script>
+
+function getGrade(marks){
+    if(marks >= 91) return "A1";
+    else if(marks >= 81) return "A2";
+    else if(marks >= 71) return "B1";
+    else if(marks >= 61) return "B2";
+    else if(marks >= 51) return "C1";
+    else if(marks >= 41) return "C2";
+    else if(marks >= 35) return "D";
+    else return "E";
+}
+
+function showFields(){
+    let stream = document.querySelector('input[name="stream"]:checked').value;
+
+    document.getElementById("bioSection").style.display = "none";
+    document.getElementById("mathSection").style.display = "none";
+
+    if(stream === "PCB"){
+        document.getElementById("bioSection").style.display = "block";
+    }
+    else if(stream === "PCM"){
+        document.getElementById("mathSection").style.display = "block";
+    }
+    else if(stream === "PCMB"){
+        document.getElementById("bioSection").style.display = "block";
+        document.getElementById("mathSection").style.display = "block";
+    }
+}
+
+function calculateResult(){
+
+    let stream = document.querySelector('input[name="stream"]:checked');
+
+    if(!stream){
+        alert("Please select a stream.");
+        return;
+    }
+
+    stream = stream.value;
+
+    let physics = document.getElementById("physics").value;
+    let chemistry = document.getElementById("chemistry").value;
+    let biology = document.getElementById("biology").value;
+    let maths = document.getElementById("maths").value;
+
+    if(physics === "" || chemistry === ""){
+        alert("Physics and Chemistry are mandatory.");
+        return;
+    }
+
+    if(stream === "PCB" && biology === ""){
+        alert("Please enter Biology marks.");
+        return;
+    }
+
+    if(stream === "PCM" && maths === ""){
+        alert("Please enter Mathematics marks.");
+        return;
+    }
+
+    if(stream === "PCMB" && (biology === "" || maths === "")){
+        alert("Please enter Biology and Mathematics marks.");
+        return;
+    }
+
+    physics = Number(physics);
+    chemistry = Number(chemistry);
+    biology = biology === "" ? null : Number(biology);
+    maths = maths === "" ? null : Number(maths);
+
+    if(
+        physics < 0 || physics > 100 ||
+        chemistry < 0 || chemistry > 100 ||
+        (biology !== null && (biology < 0 || biology > 100)) ||
+        (maths !== null && (maths < 0 || maths > 100))
+    ){
+        alert("Marks must be between 0 and 100.");
+        return;
+    }
+
+    // Build subjects array
+    let subjects = [
+        { name: "Physics", marks: physics },
+        { name: "Chemistry", marks: chemistry }
+    ];
+
+    if(biology !== null) subjects.push({ name: "Biology", marks: biology });
+    if(maths !== null) subjects.push({ name: "Mathematics", marks: maths });
+
+    // Calculate totals
+    let obtained = subjects.reduce((sum, s) => sum + s.marks, 0);
+    let totalMarks = subjects.length * 100;
+    let percentage = (obtained / totalMarks) * 100;
+    let overallGrade = getGrade(percentage);
+    let overallResult = subjects.every(s => s.marks >= 35) ? "PASS" : "FAIL";
+
+    // Build subject-wise grade table
+    let tbody = document.getElementById("gradeTableBody");
+    tbody.innerHTML = "";
+
+    subjects.forEach(function(sub){
+        let g = getGrade(sub.marks);
+        let passed = sub.marks >= 35;
+        let row = document.createElement("tr");
+        row.innerHTML =
+            "<td>" + sub.name + "</td>" +
+            "<td>" + sub.marks + " / 100</td>" +
+            "<td class='" + (passed ? "sub-grade" : "sub-fail") + "'>" + g + "</td>" +
+            "<td class='" + (passed ? "pass" : "fail") + "'>" + (passed ? "Pass" : "Fail") + "</td>";
+        tbody.appendChild(row);
+    });
+
+    // Update summary
+    document.getElementById("total").innerText = obtained + " / " + totalMarks;
+    document.getElementById("percentage").innerText = percentage.toFixed(2) + "%";
+    document.getElementById("grade").innerText = overallGrade;
+
+    let resultEl = document.getElementById("result");
+    resultEl.innerText = overallResult;
+    resultEl.className = overallResult === "PASS" ? "pass" : "fail";
+
+    // Show result box and print button
+    document.getElementById("resultBox").style.display = "block";
+    document.getElementById("printBtn").style.display = "block";
+
+    // Scroll to result
+    document.getElementById("resultBox").scrollIntoView({ behavior: "smooth" });
+}
+
+function toggleDarkMode(){
+    document.body.classList.toggle("dark-mode");
+    let btn = document.querySelector(".dark-toggle");
+    btn.innerHTML = document.body.classList.contains("dark-mode") ? "☀️" : "🌙";
+}
+
+</script>
+
+</body>
+</html>
